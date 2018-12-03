@@ -54,7 +54,7 @@ spec:
               command:  ['sh', '-c', '${WSO2_SERVER_HOME}/bin/wso2server.sh stop']
         imagePullPolicy: Always
         securityContext:
-          runAsUser: 802
+          runAsUser: 8020
         ports:
         -
           containerPort: 8280
@@ -92,7 +92,8 @@ spec:
           mountPath: /home/wso2carbon/wso2-config-volume/repository/conf/datasources
         - name: apim-km-conf-identity
           mountPath: /home/wso2carbon/wso2-config-volume/repository/conf/identity
-      serviceAccountName: "wso2svc-account"
+      #serviceAccountName: "wso2svc-account"
+      serviceAccountName: "wso2svcacct"
       imagePullSecrets:
       - name: wso2creds
       volumes:

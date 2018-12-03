@@ -31,12 +31,12 @@ spec:
     spec:
       containers:
       - name: wso2apim-analytics
-        image: docker.wso2.com/wso2am-analytics-worker:2.6.0
+        image: "535544306598.dkr.ecr.eu-central-1.amazonaws.com/wso2am:wso2am-analytics-2.6.0-v01"
         resources:
           limits:
-            memory: "4Gi"
+            memory: "2Gi"
           requests:
-            memory: "4Gi"
+            memory: "2Gi"
         livenessProbe:
           exec:
             command:
@@ -57,9 +57,10 @@ spec:
           preStop:
             exec:
               command:  ['sh', '-c', '${WSO2_SERVER_HOME}/bin/worker.sh stop']
-        imagePullPolicy: Always
+        #imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent 
         securityContext:
-          runAsUser: 802
+          runAsUser: 8020
         ports:
         -
           containerPort: 9764
@@ -85,9 +86,10 @@ spec:
         volumeMounts:
         - name: apim-analytics-conf-worker
           mountPath: /home/wso2carbon/wso2-config-volume/conf/worker
-      serviceAccountName: "wso2svc-account"
-      imagePullSecrets:
-      - name: wso2creds
+      #serviceAccountName: "wso2svc-account"
+      serviceAccountName: "wso2svcacct"
+      #imagePullSecrets:
+      #- name: wso2creds
       volumes:
       - name: apim-analytics-conf-worker
         configMap:

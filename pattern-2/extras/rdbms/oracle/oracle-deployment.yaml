@@ -1,0 +1,51 @@
+# Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: wso2apim-pattern-2-oracle-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        deployment: wso2apim-pattern-2-oracle
+    spec:
+      containers:
+      - name: wso2apim-pattern-2-oracle
+        image: docker.io/sath89/oracle-xe-11g:latest
+        imagePullPolicy: IfNotPresent
+#        securityContext:
+#          runAsUser: 0
+        env:
+        - name:  DEFAULT_SYS_PASS
+          value: wso2wso2wso2
+        ports:
+        - containerPort: 1521
+          protocol: TCP
+        volumeMounts:
+        - name: oracle-dbscripts
+          mountPath: /docker-entrypoint-initdb.d
+        - name: apim-rdbms-persistent-storage
+          mountPath: /u01/app/oracle
+      volumes:
+      - name: oracle-dbscripts
+        configMap:
+          name: oracle-dbscripts
+      - name: apim-rdbms-persistent-storage
+        persistentVolumeClaim:
+          claimName: wso2apim-pattern-2-rdbms-volume-claim
+      #serviceAccountName: "wso2svc-account"
+      serviceAccountName: "wso2svcacct"

@@ -35,12 +35,12 @@
             </jndiConfig>
             <definition type="RDBMS">
                 <configuration>
-                    <url>jdbc:mysql://wso2apim-pattern-2-rdbms-service:3306/WSO2AM_APIMGT_DB?autoReconnect=true&amp;useSSL=false</url>
-                    <username>wso2carbon</username>
-                    <password>wso2carbon</password>
+                    <url>jdbc:oracle:this:@//wso2apim-pattern-2-rdbms-service:1521/XE</url>
+                    <username>wso2api</username>
+                    <password>wso2api</password>
                     <defaultAutoCommit>false</defaultAutoCommit>
-                    <driverClassName>com.mysql.jdbc.Driver</driverClassName>
-                    <maxActive>50</maxActive>
+                    <driverClassName>oracle.jdbc.driver.OracleDriver</driverClassName>
+                    <maxActive>10</maxActive>
                     <maxWait>60000</maxWait>
                     <testOnBorrow>true</testOnBorrow>
                     <validationQuery>SELECT 1</validationQuery>
@@ -57,11 +57,11 @@
             </jndiConfig>
             <definition type="RDBMS">
                 <configuration>
-                    <url>jdbc:mysql://wso2apim-pattern-2-rdbms-service:3306/WSO2AM_COMMON_DB?autoReconnect=true&amp;useSSL=false</url>
+                    <url>jdbc:oracle:this:@//wso2apim-pattern-2-rdbms-service:1521/XE</url>
                     <username>wso2carbon</username>
                     <password>wso2carbon</password>
-                    <driverClassName>com.mysql.jdbc.Driver</driverClassName>
-                    <maxActive>50</maxActive>
+                    <driverClassName>oracle.jdbc.driver.OracleDriver</driverClassName>
+                    <maxActive>5</maxActive>
                     <maxWait>60000</maxWait>
                     <testOnBorrow>true</testOnBorrow>
                     <validationQuery>SELECT 1</validationQuery>
@@ -78,11 +78,11 @@
             </jndiConfig>
             <definition type="RDBMS">
                 <configuration>
-                    <url>jdbc:mysql://wso2apim-pattern-2-rdbms-service:3306/WSO2AM_COMMON_DB?autoReconnect=true&amp;useSSL=false</url>
-                    <username>wso2carbon</username>
-                    <password>wso2carbon</password>
-                    <driverClassName>com.mysql.jdbc.Driver</driverClassName>
-                    <maxActive>80</maxActive>
+                    <url>jdbc:oracle:this:@//wso2apim-pattern-2-rdbms-service:1521/X</url>
+                    <username>wso2reg</username>
+                    <password>wso2reg</password>
+                    <driverClassName>oracle.jdbc.driver.OracleDriver</driverClassName>
+                    <maxActive>10</maxActive>
                     <maxWait>60000</maxWait>
                     <testOnBorrow>true</testOnBorrow>
                     <validationQuery>SELECT 1</validationQuery>
@@ -99,10 +99,11 @@
             </jndiConfig>
             <definition type="RDBMS">
                 <configuration>
-                    <url>jdbc:mysql://wso2apim-pattern-2-rdbms-service:3306/WSO2AM_STAT_DB?autoReconnect=true&amp;useSSL=false</url>
+                    <url>jdbc:h2:../tmpStatDB/WSO2AM_STATS_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000;AUTO_SERVER=TRUE</url>
                     <username>wso2carbon</username>
                     <password>wso2carbon</password>
-                    <driverClassName>com.mysql.jdbc.Driver</driverClassName>
+                    <defaultAutoCommit>true</defaultAutoCommit>
+                    <driverClassName>org.h2.Driver</driverClassName>
                     <maxActive>50</maxActive>
                     <maxWait>60000</maxWait>
                     <testOnBorrow>true</testOnBorrow>

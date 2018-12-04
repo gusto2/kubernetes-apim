@@ -31,7 +31,7 @@ spec:
     spec:
       containers:
       - name: wso2apim-km
-        image: docker.wso2.com/wso2am:2.6.0
+        image: 535544306598.dkr.ecr.eu-central-1.amazonaws.com/wso2am:wso2am-2.6.0-v01
         livenessProbe:
           exec:
             command:
@@ -52,7 +52,8 @@ spec:
           preStop:
             exec:
               command:  ['sh', '-c', '${WSO2_SERVER_HOME}/bin/wso2server.sh stop']
-        imagePullPolicy: Always
+        # imagePullPolicy: Always
+        imagePullPolicy: IfNoPresent
         securityContext:
           runAsUser: 8020
         ports:
@@ -92,10 +93,12 @@ spec:
           mountPath: /home/wso2carbon/wso2-config-volume/repository/conf/datasources
         - name: apim-km-conf-identity
           mountPath: /home/wso2carbon/wso2-config-volume/repository/conf/identity
+       - name: apim-km-conf-tomcat
+          mountPath: /home/wso2carbon/wso2-config-volume/repository/conf/tomcat
       #serviceAccountName: "wso2svc-account"
       serviceAccountName: "wso2svcacct"
-      imagePullSecrets:
-      - name: wso2creds
+      #imagePullSecrets:
+      #- name: wso2creds
       volumes:
       - name: apim-km-conf
         configMap:
@@ -109,3 +112,6 @@ spec:
       - name: apim-km-conf-identity
         configMap:
           name: apim-km-conf-identity
+      - name: apim-km-conf-tomcat
+        configMap:
+          name: apim-km-conf-tomcat

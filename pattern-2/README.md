@@ -249,3 +249,69 @@ kubectl scale --replicas=<n> -f <KUBERNETES_HOME>/pattern-2/apim-gw/wso2apim-gat
 ```
 
 For example, If `<n>` is 2, you are here scaling up this deployment from 1 to 2 container replicas.
+
+Openshift deployment:
+
+```
+# database
+oc create -f extras/rdbms/volumes/persistent-volumes.yaml
+oc create -f extras/rdbms/oracle/oracle-persistent-volume-claim.yaml
+oc create configmap oracle-dbscripts --from-file ./extras/confs/rdbms/oracle/dbscripts/
+oc create -f  extras/rdbms/oracle/oracle-deployment.yaml
+oc create -f extras/rdbms/oracle/oracle-service.yaml
+
+# analytics
+oc create configmap apim-analytics-conf-worker --from-file confs/apim-analytics/conf/worker/
+oc create -f apim-analytics/wso2apim-analytics-deployment.yaml
+oc create -f apim-analytics/wso2apim-analytics-service.yaml
+
+# key manager
+oc create configmap apim-km-conf --from-file confs/apim-km/
+oc create configmap apim-km-conf-axis2 --from-file confs/apim-km/axis2/
+oc create configmap apim-km-conf-identity --from-file confs/apim-km/identity/identity.xml
+oc create configmap apim-km-conf-tomcat  --from-file confs/apim-km/tomcat/
+oc create -f apim-km/wso2apim-km-service.yaml
+oc create -f 
+
+# key manager
+
+     - name: apim-km-conf
+        configMap:
+          name: apim-km-conf
+		  
+     - name: apim-km-conf-tomcat
+        configMap:
+          name: apim-km-conf-tomcat
+      - name: apim-km-conf-axis2
+        configMap:
+          name: apim-km-conf-axis2
+      - name: apim-km-conf-datasources
+        configMap:
+          name: apim-km-conf-datasources
+      - name: apim-km-conf-identity
+        configMap:
+          name: apim-km-conf-identity
+
+
+
+         jdbcUrl:  "jdbc:oracle:thin:@//wso2apim-pattern-2-rdbms-service:1521/XE"
+          username: wso2analytics
+          password: wso2analytics
+          driverClassName: oracle.jdbc.driver.OracleDriver
+
+      #serviceAccountName: "wso2svcacct"
+
+create user wso2carbon default tablespace wso2carbon26 identified by wso2carbon;
+create user wso2reg default tablespace wso2reg26 identified by wso2reg;
+create user wso2api default tablespace wso2api26 identified by wso2api;
+	  
+hosts:
+<nppcrypt version="1015">
+<encryption cipher="rijndael128" mode="ofb" encoding="base64" />
+<random iv="/I7+FV9ErAIW13RqpUiRVQ==" salt="wdPMwqTduh3S3kLoDj1P6A==" />
+<key algorithm="scrypt" N="16384" r="8" p="1" />
+</nppcrypt>
+fGHqGv+60omcO/KvxX4sRL5Ytl0V2Vu/A3YeNTsHWiEMCgY9oi4g4VrTDi66IPo7
+YefAqyfaESE/taAaJeAa+KzTHGScylZtv34oY5wEg+RW9407YhCRDRSCTF3HdQ==
+ 
+```

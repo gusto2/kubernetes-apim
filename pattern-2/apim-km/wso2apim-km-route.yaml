@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Route
+metadata:
+  name: apim-km-route
+spec:
+  host: apim-km-dev.sse-consulting.eu
+  to:
+    kind: Service
+    name: wso2apim-km-service
+# TBD service port
+# TBD tls passthrough or reencryption
